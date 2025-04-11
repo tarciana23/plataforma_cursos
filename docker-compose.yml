@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  curso-service:
+    build: ./curso_service
+    container_name: curso_service
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./curso_service:/app
+
+  aluno-service:
+    build: ./aluno_service
+    container_name: aluno_service
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./aluno_service:/app
+
+  professor-service:
+    build: ./professor_service
+    container_name: professor_service
+    ports:
+      - "8003:8000"
+    volumes:
+      - ./professor_service:/app
