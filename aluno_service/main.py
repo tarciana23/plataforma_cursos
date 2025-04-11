@@ -17,3 +17,9 @@ def criar_aluno(aluno: AlunoCreate):
     db.commit()
     db.refresh(db_aluno)
     return db_aluno
+
+@app.get("/alunos", response_model=list[AlunoRead])
+def listar_alunos():
+    db: Session = SessionLocal()
+    alunos = db.query(Aluno).all()  
+    return alunos

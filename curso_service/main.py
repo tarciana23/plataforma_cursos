@@ -20,7 +20,18 @@ def criar_curso(curso: CursoCreate):
 
 
 @app.get("/cursos", response_model=list[CursoRead])
-def listar_cursos(categoria: str):
+def listar_cursos(categoria: str = None):
     db: Session = SessionLocal()
-    cursos = db.query(Curso).filter(Curso.categoria == categoria).all()
+    
+    # Se categoria for fornecida, filtra os cursos pela categoria
+    if categoria:
+        cursos = db.query(Curso).filter(Curso.categoria == categoria).all()
+    else:
+        cursos = db.query(Curso).all()  # Retorna todos os cursos, se categoria não for fornecida
+    
+    if not cursos:
+        raise HTTPException(status_code=404, detail="Nenhum curso encontrado.")
+    
     return cursos
+
+
